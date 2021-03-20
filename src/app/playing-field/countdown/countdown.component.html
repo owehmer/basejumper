@@ -1,5 +1,5 @@
-<div class="countdown__container">
+<div class="countdown__container" *ngIf="secondsToDeadline$ | async as seconds">
   <div class="countdown__container__label">
-    {{secondsToDeadline}}
+    {{seconds}}
   </div>
 </div>

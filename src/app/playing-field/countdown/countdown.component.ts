@@ -7,8 +7,9 @@ import {
   SimpleChange,
   SimpleChanges
 } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
+import { interval, Observable, Subscription } from 'rxjs';
 import { appDate, TimeGranularity } from '../../helper/date/app-date';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-countdown',
@@ -18,13 +19,13 @@ import { appDate, TimeGranularity } from '../../helper/date/app-date';
 })
 export class CountdownComponent implements OnChanges, OnDestroy {
   @Input()
-  set destinationTime(val: Date) {
+  set destinationTime(val: Date | undefined) {
     this._destinationTime = val;
   }
 
-  secondsToDeadline!: number;
+  secondsToDeadline$: Observable<number | undefined> | undefined;
 
-  private _destinationTime!: Date;
+  private _destinationTime: Date | undefined;
   private _timeInterval$$: Subscription | undefined;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,14 +47,17 @@ export class CountdownComponent implements OnChanges, OnDestroy {
       return;
     }
 
-    this._timeInterval$$ = interval(200).subscribe(() => {
-      const now = appDate.getNow();
+    this.secondsToDeadline$ = interval(200).pipe(
+      map(() => {
+          const now = appDate.getNow();
 
-      if (now >= this._destinationTime) {
-        this.secondsToDeadline = appDate.diffIn(now, this._destinationTime, TimeGranularity.second);
-      } else {
-        this.secondsToDeadline = 0;
-      }
-    });
+          if (this._destinationTime !== undefined && now < this._destinationTime) {
+            return Math.abs(appDate.diffIn(now, this._destinationTime, TimeGranularity.second));
+          }
+          return undefined;
+        }
+      ),
+      startWith(undefined)
+    );
   }
 }

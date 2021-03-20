@@ -6,3 +6,5 @@
   <div class="pf__participant-area__label">Participants</div>
   <app-jumper *ngFor="let jumper of dropParticipants" [jumper]="jumper"></app-jumper>
 </div>
+
+<app-countdown *ngIf="dropExists && dropAllowsRegistrations" [destinationTime]="registrationDueTime"></app-countdown>

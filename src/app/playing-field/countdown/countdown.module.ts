@@ -5,6 +5,9 @@ import { CountdownComponent } from './countdown.component';
 
 @NgModule({
   declarations: [CountdownComponent],
+  exports: [
+    CountdownComponent
+  ],
   imports: [
     CommonModule
   ]

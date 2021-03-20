@@ -9,6 +9,10 @@ export class Drop {
     return new Date() <= this._startingTime;
   }
 
+  get registrationDueTime(): Date {
+    return this._startingTime;
+  }
+
   private readonly _height: number;
   private readonly _width: number;
   private readonly _startingTime: Date;

@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Drop } from '../contracts/drop';
 import { Basejumper } from '../contracts/jumper';
+import { appDate } from '../helper/date/app-date';
 
 @Component({
   selector: 'app-playing-field',
@@ -21,6 +22,10 @@ export class PlayingFieldComponent {
     return this?._currentDrop?.participants;
   }
 
+  get registrationDueTime(): Date | undefined {
+    return this?._currentDrop?.registrationDueTime;
+  }
+
   private _currentDrop: Drop | null = null;
 
   startDrop(): void {
@@ -28,17 +33,7 @@ export class PlayingFieldComponent {
       alert('A drop already started!');
     }
 
-    const time = new Date();
-    const seconds = time.getSeconds();
-    if (seconds < 55) {
-      time.setSeconds(seconds + 5);
-    } else {
-      const minutes = time.getMinutes();
-      time.setMinutes(minutes + 1);
-      time.setSeconds(0);
-    }
-
-    this._currentDrop = new Drop(200, 200, time);
+    this._currentDrop = new Drop(200, 200, appDate.add(appDate.getNow(), { minutes: 1 }));
   }
 
   addJumper(): void {

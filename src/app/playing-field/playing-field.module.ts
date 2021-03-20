@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PlayingFieldComponent } from './playing-field.component';
 import { RouterModule } from '@angular/router';
 import { JumperModule } from '../jumper/jumper.module';
+import { CountdownModule } from './countdown/countdown.module';
 
 @NgModule({
   declarations: [PlayingFieldComponent],
@@ -12,7 +13,8 @@ import { JumperModule } from '../jumper/jumper.module';
     RouterModule.forChild([{
       path: '**',
       component: PlayingFieldComponent
-    }])
+    }]),
+    CountdownModule
   ]
 })
 export class PlayingFieldModule {
