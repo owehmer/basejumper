@@ -1,0 +1,8 @@
+<button (click)="startDrop()" *ngIf="!dropExists">Start a new drop!</button>
+
+<button (click)="addJumper()" *ngIf="dropExists && dropAllowsRegistrations">Add a base jumper!</button>
+
+<div *ngIf="dropExists" class="pf__participant-area">
+  <div class="pf__participant-area__label">Participants</div>
+  <app-jumper *ngFor="let jumper of dropParticipants" [jumper]="jumper"></app-jumper>
+</div>

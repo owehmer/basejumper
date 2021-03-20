@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.pf__participant-area {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 12px;
+  row-gap: 12px;
+  column-gap: 40px;
+
+  &__label {
+    margin-bottom: 12px;
+    font-size: 20px;
+    flex: 100%;
+  }
+}
