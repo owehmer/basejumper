@@ -1,8 +1,22 @@
-<button (click)="startDrop()" *ngIf="!dropExists">Start a new drop!</button>
+<div class="control-area">
+  <div *ngIf="!dropExists" class="pre-drop-controls">
+    <button (click)="startDrop()">Start a new drop!</button>
+  </div>
 
-<button (click)="addJumper()" *ngIf="dropExists && dropAllowsRegistrations">Add a base jumper!</button>
+  <div *ngIf="dropAllowsRegistrations" class="registration-controls">
+    <button (click)="addJumper()">Add a base jumper!</button>
+  </div>
+</div>
 
-<div *ngIf="dropExists" class="pf__participant-area">
-  <div class="pf__participant-area__label">Participants</div>
-  <app-jumper *ngFor="let jumper of dropParticipants" [jumper]="jumper"></app-jumper>
+<div *ngIf="dropAllowsRegistrations" class="registration-screen">
+  <app-countdown *ngIf="dropAllowsRegistrations" [destinationTime]="registrationDueTime"></app-countdown>
+
+  <div class="pf__participant-area">
+    <div class="pf__participant-area__label">Participants</div>
+    <app-jumper *ngFor="let jumper of dropParticipants" [jumper]="jumper"></app-jumper>
+  </div>
+</div>
+
+<div *ngIf="gameIsInProgress" class="game-in-progress">
+
 </div>

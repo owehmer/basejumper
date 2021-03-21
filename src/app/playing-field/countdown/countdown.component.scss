@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.countdown__container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__label {
+    font-size: 35px;
+  }
+}
