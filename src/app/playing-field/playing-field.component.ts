@@ -11,37 +11,37 @@ import { appDate } from '../helper/date/app-date';
 })
 export class PlayingFieldComponent {
   get dropExists(): boolean {
-    return this._currentDrop !== null;
+    return this.currentDrop !== null;
   }
 
   get dropAllowsRegistrations(): boolean {
-    return this._currentDrop?.isRegistrationOpen ?? false;
+    return this.currentDrop?.isRegistrationOpen ?? false;
   }
 
   get dropParticipants(): Basejumper[] | undefined {
-    return this?._currentDrop?.participants;
+    return this?.currentDrop?.participants;
   }
 
   get registrationDueTime(): Date | undefined {
-    return this?._currentDrop?.registrationDueTime;
+    return this?.currentDrop?.registrationDueTime;
   }
 
   get gameIsInProgress(): boolean {
-    return this._currentDrop !== null && this._currentDrop.registrationDueTime < appDate.getNow();
+    return this.currentDrop !== null && this.currentDrop.registrationDueTime < appDate.getNow();
   }
 
-  private _currentDrop: Drop | null = null;
+  currentDrop: Drop | null = null;
 
   startDrop(): void {
-    if (this._currentDrop !== null) {
+    if (this.currentDrop !== null) {
       alert('A drop already started!');
       return;
     }
 
-    this._currentDrop = new Drop(200, 200, appDate.add(appDate.getNow(), { seconds: 20 }));
+    this.currentDrop = new Drop(200, 200, appDate.add(appDate.getNow(), { seconds: 5 }));
   }
 
   addJumper(): void {
-    this._currentDrop?.addJumper(new Basejumper('Tharos', 10, 10, 'red'));
+    this.currentDrop?.addJumper(new Basejumper('Tharos', 10, 10, 'red'));
   }
 }
