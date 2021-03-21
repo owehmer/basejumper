@@ -26,6 +26,10 @@ export class PlayingFieldComponent {
     return this?._currentDrop?.registrationDueTime;
   }
 
+  get gameIsInProgress(): boolean {
+    return this._currentDrop !== null && this._currentDrop.registrationDueTime < appDate.getNow();
+  }
+
   private _currentDrop: Drop | null = null;
 
   startDrop(): void {
@@ -33,7 +37,7 @@ export class PlayingFieldComponent {
       alert('A drop already started!');
     }
 
-    this._currentDrop = new Drop(200, 200, appDate.add(appDate.getNow(), { minutes: 1 }));
+    this._currentDrop = new Drop(200, 200, appDate.add(appDate.getNow(), { seconds: 20 }));
   }
 
   addJumper(): void {

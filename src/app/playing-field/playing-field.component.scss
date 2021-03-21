@@ -2,6 +2,13 @@
   display: block;
 }
 
+.control-area {
+  padding: 12px;
+  margin-bottom: 55px;
+  border-bottom: 3px dotted black;
+  background-color: #4dadff;
+}
+
 .pf__participant-area {
   display: flex;
   flex-wrap: wrap;
