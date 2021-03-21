@@ -35,6 +35,7 @@ export class PlayingFieldComponent {
   startDrop(): void {
     if (this._currentDrop !== null) {
       alert('A drop already started!');
+      return;
     }
 
     this._currentDrop = new Drop(200, 200, appDate.add(appDate.getNow(), { seconds: 20 }));
