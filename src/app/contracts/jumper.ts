@@ -1,14 +1,63 @@
+import { randomIntFromInterval } from '../helper/math';
+
 export class Basejumper {
-  height: number;
-  width: number;
-  color: string;
-  name: string;
+  private static BASEJUMPER_ID = 0;
+
+  get id(): number {
+    return this._id;
+  }
+
+  get height(): number {
+    return this._height;
+  }
+
+  get width(): number {
+    return this._width;
+  }
+
+  get color(): string {
+    return this._color;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get dropSpeed(): number {
+    return this._pixelsPerTick;
+  }
+
+  private readonly _id: number;
+  private readonly _height: number;
+  private readonly _width: number;
+  private readonly _color: string;
+  private readonly _name: string;
+  private readonly _pixelsPerTick: number; // movement speed
+
+  private _htmlElement: HTMLElement | null = null;
 
   constructor(name: string, height: number, width: number, color: string) {
-    this.height = height;
-    this.width = width;
-    this.color = color;
-    this.name = name;
+    this._id = Basejumper.BASEJUMPER_ID++;
+    this._height = height;
+    this._width = width;
+    this._color = color;
+    this._name = name;
+    this._pixelsPerTick = randomIntFromInterval(1, 10);
+  }
+
+  attachElement(htmlElement: HTMLElement): void {
+    this._htmlElement = htmlElement;
+  }
+
+  detachElement(): void {
+    this._htmlElement = null;
+  }
+
+  getRect(): DOMRect {
+    if (this._htmlElement === null) {
+      throw new Error('Could not found attached HTML Element for ' + this._name);
+    }
+    return this._htmlElement.getBoundingClientRect();
   }
 
 }

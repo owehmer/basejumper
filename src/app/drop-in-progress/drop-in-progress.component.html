@@ -1,0 +1,8 @@
+<app-jumper *ngFor="let jumper of jumpers; trackBy: trackById"
+            [jumper]="jumper"
+            [style.top.px]="getJumperYCoord(jumper.id)"
+            [style.left.px]="getJumperXCoord(jumper.id)"
+></app-jumper>
+
+<div class="goal" #goal></div>
+

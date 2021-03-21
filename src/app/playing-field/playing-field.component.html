@@ -17,6 +17,6 @@
   </div>
 </div>
 
-<div *ngIf="gameIsInProgress" class="game-in-progress">
-
+<div *ngIf="gameIsInProgress && currentDrop !== null && dropParticipants !== undefined" class="game-in-progress">
+  <app-drop-in-progress [drop]="currentDrop" [jumpers]="dropParticipants"></app-drop-in-progress>
 </div>
