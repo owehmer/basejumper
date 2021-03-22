@@ -1,3 +1,11 @@
 :host {
-  display: block;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+  transition: top 100ms, left 100ms;
+}
+
+.jumper__name {
+
 }

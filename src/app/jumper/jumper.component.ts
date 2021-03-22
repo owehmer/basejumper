@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import { Basejumper } from '../contracts/jumper';
 
 @Component({
@@ -7,15 +15,15 @@ import { Basejumper } from '../contracts/jumper';
   styleUrls: ['./jumper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JumperComponent implements OnInit, OnDestroy {
+export class JumperComponent implements AfterViewInit, OnDestroy {
   @Input()
   jumper!: Basejumper;
 
-  constructor(private _elemRef: ElementRef<HTMLElement>) {
-  }
+  @ViewChild('body')
+  private _bodyRef!: ElementRef<HTMLElement>;
 
-  ngOnInit(): void {
-    this.jumper.attachElement(this._elemRef.nativeElement);
+  ngAfterViewInit(): void {
+    this.jumper.attachElement(this._bodyRef.nativeElement);
   }
 
   ngOnDestroy(): void {
