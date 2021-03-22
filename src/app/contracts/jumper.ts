@@ -23,8 +23,8 @@ export class Basejumper {
     return this._name;
   }
 
-  get dropSpeed(): number {
-    return this._pixelsPerTick;
+  get weight(): number {
+    return this._weight;
   }
 
   private readonly _id: number;
@@ -32,7 +32,7 @@ export class Basejumper {
   private readonly _width: number;
   private readonly _color: string;
   private readonly _name: string;
-  private readonly _pixelsPerTick: number; // movement speed
+  private readonly _weight: number;
 
   private _htmlElement: HTMLElement | null = null;
 
@@ -42,7 +42,7 @@ export class Basejumper {
     this._width = width;
     this._color = color;
     this._name = name;
-    this._pixelsPerTick = randomIntFromInterval(1, 10);
+    this._weight = randomIntFromInterval(1, 10);
   }
 
   attachElement(htmlElement: HTMLElement): void {
