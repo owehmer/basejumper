@@ -1,4 +1,4 @@
-import { randomIntFromInterval } from '../helper/math';
+import * as Matter from 'matter-js';
 
 export class Basejumper {
   private static BASEJUMPER_ID = 0;
@@ -27,6 +27,10 @@ export class Basejumper {
     return this._weight;
   }
 
+  get body(): Matter.Body | undefined {
+    return this._body ?? undefined;
+  }
+
   private readonly _id: number;
   private readonly _height: number;
   private readonly _width: number;
@@ -34,7 +38,8 @@ export class Basejumper {
   private readonly _name: string;
   private readonly _weight: number;
 
-  private _htmlElement: HTMLElement | null = null;
+  private _body: Matter.Body | null = null;
+  private _world: Matter.World | null = null;
 
   constructor(name: string, height: number, width: number, color: string) {
     this._id = Basejumper.BASEJUMPER_ID++;
@@ -42,22 +47,28 @@ export class Basejumper {
     this._width = width;
     this._color = color;
     this._name = name;
-    this._weight = randomIntFromInterval(1, 10);
+    this._weight = 100;
   }
 
-  attachElement(htmlElement: HTMLElement): void {
-    this._htmlElement = htmlElement;
+  attachMatterBody(world: Matter.World): void {
+    this._body = Matter.Bodies.rectangle(0, 0, this.width, this.height);
+    this._body.friction = 0.1;
+    this._body.frictionAir = 0;
+
+    Matter.Body.setMass(this._body, this.weight);
+    Matter.World.add(world, this._body);
   }
 
-  detachElement(): void {
-    this._htmlElement = null;
-  }
+  detachMatterBody(): void {
+    const world = this._world;
+    const body = this._body;
 
-  getRect(): DOMRect {
-    if (this._htmlElement === null) {
-      throw new Error('Could not found attached HTML Element for ' + this._name);
+    if (world === null || body === null) {
+      throw new Error('You need to initiate the body first!');
     }
-    return this._htmlElement.getBoundingClientRect();
+    Matter.World.remove(world, body);
+    this._body = null;
+    this._world = null;
   }
 
 }

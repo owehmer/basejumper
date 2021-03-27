@@ -6,6 +6,9 @@
   transition: top 100ms, left 100ms;
 }
 
-.jumper__name {
+.jumper__body {
+  transition: transform 20ms;
+}
 
+.jumper__name {
 }
