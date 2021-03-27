@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "11.2.6",
     "@angular/router": "11.2.6",
     "date-fns": "^2.19.0",
+    "matter-js": "^0.16.1",
+    "poly-decomp": "^0.3.0",
     "rxjs": "6.6.6",
     "tslib": "2.0.3",
     "zone.js": "0.11.4"
@@ -36,6 +38,7 @@
     "@angular/cli": "11.2.5",
     "@angular/compiler-cli": "11.2.6",
     "@types/jest": "26.0.21",
+    "@types/matter-js": "^0.14.11",
     "@types/node": "14.14.35",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",

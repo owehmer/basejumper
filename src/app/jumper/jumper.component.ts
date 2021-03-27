@@ -1,32 +1,62 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  ViewChild
-} from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Basejumper } from '../contracts/jumper';
+import * as Matter from 'matter-js';
 
 @Component({
   selector: 'app-jumper',
   templateUrl: './jumper.component.html',
-  styleUrls: ['./jumper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./jumper.component.scss']
+  // No OnPush because of the rotation
 })
-export class JumperComponent implements AfterViewInit, OnDestroy {
+export class JumperComponent implements OnDestroy, OnChanges {
   @Input()
   jumper!: Basejumper;
 
-  @ViewChild('body')
-  private _bodyRef!: ElementRef<HTMLElement>;
+  @Input()
+  world: Matter.World | undefined;
 
-  ngAfterViewInit(): void {
-    this.jumper.attachElement(this._bodyRef.nativeElement);
+  @HostBinding('style.left.px')
+  get topX(): number | undefined {
+    const position = this.jumper.body?.position;
+    if (position === undefined) {
+      return undefined;
+    }
+    return position.x - (this.jumper.width * 2); // TODO: Get the correct positions via something like Vector.sub(body.bounds.min, body.position).x;
+  }
+
+  @HostBinding('style.top.px')
+  get topY(): number | undefined {
+    const position = this.jumper.body?.position;
+    if (position === undefined) {
+      return undefined;
+    }
+    return position.y - (this.jumper.height * 2);
+  }
+
+  rotation(): string {
+    let deg = 0;
+    if (this.jumper.body !== undefined) {
+      deg = this.jumper.body.angle;
+    }
+    return `rotate(${deg}deg)`;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.world !== undefined) {
+      try {
+        this.jumper.detachMatterBody();
+      } catch (e) {
+      }
+      if (this.world !== undefined) {
+        this.jumper.attachMatterBody(this.world);
+      }
+    }
   }
 
   ngOnDestroy(): void {
-    this.jumper.detachElement();
+    try {
+      this.jumper.detachMatterBody();
+    } catch (e) {
+    }
   }
 }
