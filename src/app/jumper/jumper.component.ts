@@ -36,7 +36,7 @@ export class JumperComponent implements OnDestroy, OnChanges {
   rotation(): string {
     let deg = 0;
     if (this.jumper.body !== undefined) {
-      deg = this.jumper.body.angle;
+      deg = this.jumper.body.angle * 180 / Math.PI;
     }
     return `rotate(${deg}deg)`;
   }

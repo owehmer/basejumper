@@ -2,8 +2,9 @@
   display: flex;
   flex-flow: column;
   align-items: center;
+  position: relative;
 
-  transition: top 100ms, left 100ms;
+  //transition: top 100ms, left 100ms;
 }
 
 .jumper__body {
@@ -11,4 +12,10 @@
 }
 
 .jumper__name {
+  position: absolute;
+  top: -20px;
+  left: -40px;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
