@@ -66,22 +66,23 @@ export class DropInProgressComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit(): void {
     this._gameField = {
-      left: this._elemRef.nativeElement.offsetLeft + 50,
-      right: this._elemRef.nativeElement.offsetWidth - 50,
+      left: this._elemRef.nativeElement.offsetLeft,
+      right: this._elemRef.nativeElement.offsetWidth,
       top: this._elemRef.nativeElement.offsetTop,
       bottom: this._elemRef.nativeElement.offsetHeight
     };
-    this._initMatterJs(false);
+    this._initMatterJs({ debugMode: false });
 
     for (const jumper of this.jumpers) {
       if (!jumper.body) {
         continue;
       }
 
-      const x = randomIntFromInterval(this._gameField.left, this._gameField.right - jumper.width);
+      const x = randomIntFromInterval(this._gameField.left, this._gameField.right);
       const y = randomIntFromInterval(this._gameField.top, this._gameField.top + 100);
 
       Matter.Body.setPosition(jumper.body, { x, y });
+      Matter.Body.setAngularVelocity(jumper.body, 0.05);
       Matter.Body.applyForce(jumper.body,
         { x, y },
         {
@@ -93,7 +94,7 @@ export class DropInProgressComponent implements OnInit, AfterViewInit, OnDestroy
 
     this._gameIsRunning$.next(true);
 
-    interval(50).pipe(
+    interval(60).pipe(
       takeUntil(this._gameIsRunning$)
     ).subscribe(() => {
       if (this._engine !== undefined) {
@@ -134,7 +135,7 @@ export class DropInProgressComponent implements OnInit, AfterViewInit, OnDestroy
     return { boundaryLeft, boundaryRight, boundaryBottom };
   }
 
-  private _initMatterJs(debugMode = false): void {
+  private _initMatterJs({ debugMode = false }: { debugMode: boolean }): void {
     if (this._gameField === undefined) {
       throw new Error('Initialize game field first!');
     }
@@ -157,7 +158,8 @@ export class DropInProgressComponent implements OnInit, AfterViewInit, OnDestroy
         options: {
           width: this._gameField.right,
           height: this._gameField.bottom,
-          showVelocity: true
+          showVelocity: true,
+          showAngleIndicator: true
         } as any
       });
 
