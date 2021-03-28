@@ -22,9 +22,7 @@ export class JumperComponent implements OnDestroy, OnChanges {
     if (body === undefined) {
       return undefined;
     }
-    const a = Vector.sub(body.bounds.min, body.position);
-    console.warn('VEC', a);
-    return body.bounds.min.x; //- (a.x);
+    return body.bounds.min.x;
   }
 
   @HostBinding('style.top.px')

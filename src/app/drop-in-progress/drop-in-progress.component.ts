@@ -82,7 +82,7 @@ export class DropInProgressComponent implements OnInit, AfterViewInit, OnDestroy
       const y = randomIntFromInterval(this._gameField.top, this._gameField.top + 100);
 
       Matter.Body.setPosition(jumper.body, { x, y });
-      Matter.Body.setAngularVelocity(jumper.body, 0.05);
+      Matter.Body.setAngularVelocity(jumper.body, 0.001);
       Matter.Body.applyForce(jumper.body,
         { x, y },
         {

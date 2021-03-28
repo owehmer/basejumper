@@ -14,9 +14,13 @@
 
 .jumper__name {
   position: absolute;
-  top: -20px;
-  left: -40px;
-  width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  height: 100%;
+  text-align: center;
 }
