@@ -1,6 +1,7 @@
 import { Component, HostBinding, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Basejumper } from '../contracts/jumper';
 import * as Matter from 'matter-js';
+import { Vector } from 'matter-js';
 
 @Component({
   selector: 'app-jumper',
@@ -17,26 +18,46 @@ export class JumperComponent implements OnDestroy, OnChanges {
 
   @HostBinding('style.left.px')
   get topX(): number | undefined {
-    const position = this.jumper.body?.position;
-    if (position === undefined) {
+    const body = this.jumper.body;
+    if (body === undefined) {
       return undefined;
     }
-    return position.x - (this.jumper.width * 2); // TODO: Get the correct positions via something like Vector.sub(body.bounds.min, body.position).x;
+    return body.bounds.min.x;
   }
 
   @HostBinding('style.top.px')
   get topY(): number | undefined {
-    const position = this.jumper.body?.position;
-    if (position === undefined) {
+    const body = this.jumper.body;
+    if (body === undefined) {
       return undefined;
     }
-    return position.y - (this.jumper.height * 2);
+    return body.bounds.min.y;
+  }
+
+  @HostBinding('style.width.px')
+  get width(): number | undefined {
+    const body = this.jumper.body;
+    if (body === undefined) {
+      return undefined;
+    }
+    const x = Vector.sub(body.bounds.min, body.bounds.max).x;
+    return Math.abs(x);
+  }
+
+  @HostBinding('style.height.px')
+  get height(): number | undefined {
+    const body = this.jumper.body;
+    if (body === undefined) {
+      return undefined;
+    }
+    const y = Vector.sub(body.bounds.min, body.bounds.max).y;
+    return Math.abs(y);
   }
 
   rotation(): string {
     let deg = 0;
     if (this.jumper.body !== undefined) {
-      deg = this.jumper.body.angle;
+      deg = this.jumper.body.angle * 180 / Math.PI;
     }
     return `rotate(${deg}deg)`;
   }

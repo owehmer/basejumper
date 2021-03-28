@@ -101,8 +101,8 @@ export class PlayingFieldComponent {
     // const height = randomIntFromInterval(10, 50);
     this.currentDrop?.addJumper(new Basejumper(
       names[randomIntFromInterval(0, names.length - 1)],
-      10,
-      10,
+      25,
+      25,
       colors[randomIntFromInterval(0, colors.length - 1)]
     ));
   }

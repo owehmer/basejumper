@@ -2,8 +2,10 @@
   display: flex;
   flex-flow: column;
   align-items: center;
+  justify-content: center;
+  position: relative;
 
-  transition: top 100ms, left 100ms;
+  transition: top 30ms, left 30ms;
 }
 
 .jumper__body {
@@ -11,4 +13,14 @@
 }
 
 .jumper__name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  height: 100%;
+  text-align: center;
 }
